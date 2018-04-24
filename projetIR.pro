@@ -15,7 +15,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 QT += widgets
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    vue/application.cpp \
+    controleur/outils.cpp \
+    modele/vecteur2d.cpp \
+    modele/trianglepascal.cpp \
+    modele/bernstein.cpp \
+    modele/bezier.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,3 +35,11 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    vue/application.h \
+    controleur/outils.h \
+    modele/vecteur2d.h \
+    modele/trianglepascal.h \
+    modele/bernstein.h \
+    modele/bezier.h
