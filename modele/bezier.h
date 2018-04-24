@@ -8,9 +8,10 @@
 using namespace std;
 
 class Bezier{
-public:
+private:
     vector<Vecteur2D> pointsDeControle;
-
+public:
+    //TODO Ajouter destructeur
     Bezier();
     void ajouterPoint(const Vecteur2D &);
     const vector<Vecteur2D>& getPointsControle()const;

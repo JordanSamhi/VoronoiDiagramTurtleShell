@@ -12,9 +12,10 @@ const T operator - (const T & u, const T & v){
 }
 
 class Vecteur2D{
-public:
+private:
     /*! \a x , \a y coordonnées du vecteur dans le plan.*/
     double x, y;
+public:
     /**
     * \ brief Constructeur à partir des coordonnées x et y.
     * \details Les coordonnées x et y sont par défaut mis à zéro.

@@ -7,11 +7,12 @@
 using namespace std;
 
 class TrianglePascal{
-public:
+private:
     const int static TAILLE_MAX = 15;
     int taille;
     int trianglePascal[TAILLE_MAX][TAILLE_MAX];
-
+public:
+    //TODO Ajouter destructeur
     TrianglePascal(int);
     void creerTrianglePascal();
     int get(const int &, const int &)const;

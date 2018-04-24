@@ -17,11 +17,12 @@ QT += widgets
 SOURCES += \
         main.cpp \
     vue/application.cpp \
-    controleur/outils.cpp \
     modele/vecteur2d.cpp \
     modele/trianglepascal.cpp \
     modele/bernstein.cpp \
-    modele/bezier.cpp
+    modele/bezier.cpp \
+    modele/carapace.cpp \
+    controleur/controleur.cpp
 
 RESOURCES += qml.qrc
 
@@ -38,8 +39,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     vue/application.h \
-    controleur/outils.h \
     modele/vecteur2d.h \
     modele/trianglepascal.h \
     modele/bernstein.h \
-    modele/bezier.h
+    modele/bezier.h \
+    modele/carapace.h \
+    controleur/controleur.h
