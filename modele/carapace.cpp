@@ -27,12 +27,12 @@ void Carapace::setContourBas(const vector<Vecteur2D> & cB){
     this->contourBas.clear();
     for(size_t i = 0 ; i < cB.size() ; i++)
         this->contourBas.push_back(cB[i]);
-    //TODO NE PAS APPELER UPDATE ICI, CHANGER ULTERIEUREMENT, CEST JUSTE POUR LES TESTS
-    this->application->update();
 }
 
 void Carapace::setSites(const vector<Vecteur2D> & s){
     this->sites.clear();
     for(size_t i = 0 ; i < s.size() ; i++)
         this->sites.push_back(s[i]);
+    //TODO NE PAS APPELER UPDATE ICI, CHANGER ULTERIEUREMENT, CEST JUSTE POUR LES TESTS
+    this->application->update();
 }

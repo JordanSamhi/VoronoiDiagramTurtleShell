@@ -12,13 +12,18 @@ using namespace std;
 class Controleur{
 private:
     Carapace *carapace;
+    Vecteur2D pointMilieuPrecedent;
+    int getNombreAleatoireEntreDeuxNombres(const int, const int) const;
+    vector<Vecteur2D> genererSitesPourCarapace(const Vecteur2D &, const Vecteur2D &, const Vecteur2D &, const bool) const;
+    void faireVarierStochastiquementLocalementUnPoint(Vecteur2D *) const;
+    Vecteur2D calculerPointDeControleMilieu(const Vecteur2D &, const Vecteur2D &) const;
 public:
-    //TODO Ajouter destructeur
+    //TODO Ajouter destructeur a la fin pour ne pas oublier de pointeurs
     Controleur();
     Controleur(Carapace *);
-    /* pour generer 3 points de controle aléatoirement comme ça on aura pas lameme carapace de trotue à chaque fois*/
-    vector<Vecteur2D> generer3PointsDeControle() const;
-    void genererCarapace();
+    void genererCarapace(const bool parfaite = false);
+    void genererNouveauxSites(const bool)const;
+    void genererCarapaceParfaite();
 };
 
 #endif // CONTROLEUR_H

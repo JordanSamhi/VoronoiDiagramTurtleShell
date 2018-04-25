@@ -2,6 +2,8 @@
 
 Bezier::Bezier(){}
 
+Bezier::~Bezier(){}
+
 void Bezier::ajouterPoint(const Vecteur2D & point){
     this->pointsDeControle.push_back(point);
 }
@@ -28,17 +30,3 @@ Vecteur2D Bezier::bezier(const double & t) const{
     return Vecteur2D(resultatX, resultatY);
 }
 
-vector<Vecteur2D> Bezier::genererSitesSelonUneCourbeDeBezier(vector<Vecteur2D> listePointsControle){
-    vector<Vecteur2D> pointsResultats;
-    Bezier bez;
-    int taille = listePointsControle.size();
-    for (int i = 0; i < taille; i++)
-        bez.ajouterPoint(listePointsControle[i]);
-    Vecteur2D res;
-    for (double t = 0; t <= 1; t += 0.1){
-        res = bez.bezier(t);
-        pointsResultats.push_back(res);
-        cout << res << endl;
-    }
-    return pointsResultats;
-}

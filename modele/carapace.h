@@ -16,7 +16,7 @@ private:
 public:
     Carapace();
     Carapace(Application *);
-    //TODO Destructeur
+    //TODO Ajouter destructeur a la fin pour ne pas oublier de pointeurs
     const vector<Vecteur2D> & getContourHaut() const;
     const vector<Vecteur2D> & getContourBas() const;
     const vector<Vecteur2D> & getSites() const;

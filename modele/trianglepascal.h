@@ -12,8 +12,8 @@ private:
     int taille;
     int trianglePascal[TAILLE_MAX][TAILLE_MAX];
 public:
-    //TODO Ajouter destructeur
     TrianglePascal(int);
+    ~TrianglePascal();
     void creerTrianglePascal();
     int get(const int &, const int &)const;
     operator string() const;

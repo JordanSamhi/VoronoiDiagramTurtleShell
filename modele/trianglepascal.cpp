@@ -4,6 +4,8 @@ TrianglePascal::TrianglePascal(int taille) : taille(taille){
     creerTrianglePascal();
 }
 
+TrianglePascal::~TrianglePascal(){}
+
 void TrianglePascal::creerTrianglePascal(){
     for (int i = 0; i <= this->taille; i++){
         /*LA diagonale est egale a 1*/

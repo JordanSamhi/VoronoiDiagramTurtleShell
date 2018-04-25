@@ -10,11 +10,18 @@
 #include <QPoint>
 #include <QPolygon>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <QMenu>
 #include <QMenuBar>
 #include <QAction>
 #include <QGraphicsScene>
+#include <QDesktopWidget>
+#include <QVector>
+#include <QPainterPath>
+#include <QGraphicsItem>
+#include <QToolBar>
+#include <QResizeEvent>
 #include "modele/carapace.h"
 #include "controleur/controleur.h"
 
@@ -23,7 +30,7 @@ class Application : public QMainWindow
     Q_OBJECT
 public:
     Application();
-    //TODO destructeur
+    //TODO Ajouter destructeur a la fin pour ne pas oublier de pointeurs
     ~Application();
     const Carapace & getCarapace() const;
     void update();
@@ -32,19 +39,29 @@ signals:
 
 public slots:
     void genererCarapace();
+    void genererNouveauxSites();
+    void afficherCacherSites();
+    void genererCarapaceParfaite();
+    void genererNouveauxSitesParfaits();
 private:
     QWidget *widgetFenetreCentral;
     QVBoxLayout *mainLayoutWidgetCentral;
-    QPushButton *genererCarapaceBtn;
+    QHBoxLayout *layoutBoutons;
+    QPushButton *genererCarapaceBtn, *genererNouveauxSitesBtn, *genererCarapaceParfaitBtn, *genererNouveauxSitesParfaitsBtn;
     QGraphicsView *vueDessin;
     QGraphicsScene *sceneDessin;
-    QMenu *menuFichier;
-    QAction *actionQuitter;
+    QMenu *menuFichier, *menuAffichage;
+    QAction *actionQuitter, *actionCacherMontrerSites;
+    vector<QGraphicsEllipseItem *> listeCercleSites;
+    QToolBar * barreOutils;
     Carapace carapace;
     Controleur controleur;
+    int unite;
 
     void genererInterface();
+    void sizeAndCenterWindow();
     void genererMenu();
+    void genererBarreOutils();
 };
 
 #endif // APPLICATION_H

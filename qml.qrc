@@ -1,5 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file alias="/icones/iconeQuitter">icones/quitter.png</file>
+        <file alias="/icones/site">icones/site.png</file>
+        <file alias="/icones/carapace">icones/carapace.png</file>
+        <file alias="/icones/sitesPasRanges">icones/sitesPasRanges.png</file>
+        <file alias="/icones/sitesRanges">icones/sitesRanges.png</file>
+        <file alias="/icones/carapaceRouge">icones/carapaceRouge.png</file>
+        <file alias="/icones/carapaceVerte">icones/carapaceVerte.png</file>
     </qresource>
 </RCC>
