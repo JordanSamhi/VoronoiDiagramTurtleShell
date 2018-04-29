@@ -23,7 +23,8 @@
 #include <QToolBar>
 #include <QResizeEvent>
 #include "modele/carapace.h"
-#include "controleur/controleur.h"
+#include "controleur/generateurCarapaces/generateurcarapacealea.h"
+#include "controleur/generateurCarapaces/generateurcarapaceparfaite.h"
 
 class Application : public QMainWindow
 {
@@ -54,8 +55,10 @@ private:
     QAction *actionQuitter, *actionCacherMontrerSites;
     vector<QGraphicsEllipseItem *> listeCercleSites;
     QToolBar * barreOutils;
+
     Carapace carapace;
-    Controleur controleur;
+    GenerateurCarapaceAlea generateurCarapaceAlea;
+    GenerateurCarapaceParfaite generateurCarapaceParfaite;
     int unite;
 
     void genererInterface();

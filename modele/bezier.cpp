@@ -4,11 +4,11 @@ Bezier::Bezier(){}
 
 Bezier::~Bezier(){}
 
-void Bezier::ajouterPoint(const Vecteur2D & point){
+void Bezier::ajouterPoint(const Point & point){
     this->pointsDeControle.push_back(point);
 }
 
-const vector<Vecteur2D> & Bezier::getPointsControle()const{
+const vector<Point> & Bezier::getPointsControle()const{
     return this->pointsDeControle;
 }
 
@@ -17,7 +17,7 @@ int Bezier::taille() const{
 }
 
 
-Vecteur2D Bezier::bezier(const double & t) const{
+Point Bezier::bezier(const double & t) const{
     int m = taille() - 1;
     double resultatX = 0, resultatY = 0;
     TrianglePascal tp(m);
@@ -27,6 +27,6 @@ Vecteur2D Bezier::bezier(const double & t) const{
         resultatX += (d * this->pointsDeControle[i].getX());
         resultatY += (d * this->pointsDeControle[i].getY());
     }
-    return Vecteur2D(resultatX, resultatY);
+    return Point(resultatX, resultatY);
 }
 

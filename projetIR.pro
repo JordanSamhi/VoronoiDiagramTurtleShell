@@ -17,12 +17,15 @@ QT += widgets
 SOURCES += \
         main.cpp \
     vue/application.cpp \
-    modele/vecteur2d.cpp \
+    modele/Point.cpp \
     modele/trianglepascal.cpp \
     modele/bernstein.cpp \
     modele/bezier.cpp \
     modele/carapace.cpp \
-    controleur/controleur.cpp
+    controleur/outils.cpp \
+    controleur/generateurCarapaces/generateurcarapacealea.cpp \
+    controleur/generateurCarapaces/generateurcarapace.cpp \
+    controleur/generateurCarapaces/generateurcarapaceparfaite.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,9 +42,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     vue/application.h \
-    modele/vecteur2d.h \
+    modele/Point.h \
     modele/trianglepascal.h \
     modele/bernstein.h \
     modele/bezier.h \
     modele/carapace.h \
-    controleur/controleur.h
+    controleur/outils.h \
+    controleur/generateurCarapaces/generateurcarapacealea.h \
+    controleur/generateurCarapaces/generateurcarapace.h \
+    controleur/generateurCarapaces/generateurcarapaceparfaite.h

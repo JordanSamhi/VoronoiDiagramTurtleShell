@@ -1,8 +1,9 @@
-#ifndef VECTEUR2D_H
-#define VECTEUR2D_H
+#ifndef Point_H
+#define Point_H
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ const T operator - (const T & u, const T & v){
     return u + -v;
 }
 
-class Vecteur2D{
+class Point{
 private:
     /*! \a x , \a y coordonnées du vecteur dans le plan.*/
     double x, y;
@@ -22,19 +23,19 @@ public:
     * \param x.
     * \param y.
     */
-    explicit Vecteur2D(const double & x = 0, const double & y = 0);
+    explicit Point(const double & x = 0, const double & y = 0);
 
     /**
     * \ brief Constructeur par copie à partir d'un vecteur.
     * \details Recopie les coordonnées du vecteur passé en paramètre dans \a x et \a y.
     * \param v.
     */
-    Vecteur2D(const Vecteur2D &);
+    Point(const Point &);
 
     /**
     * \ brief Destructeur.
     */
-    virtual ~Vecteur2D();
+    virtual ~Point();
 
     /**
     * \ brief getter du champ \a x.
@@ -66,21 +67,21 @@ public:
     * \ brief Opérateur d'addition entre deux vecteurs.
     * \param u.
     */
-    Vecteur2D operator + (const Vecteur2D &) const;
+    Point operator + (const Point &) const;
 
 
     /**
     * \ brief Opérateur de multiplication parune facteur a.
     * \param a.
     */
-    Vecteur2D operator * (const double &) const;
+    Point operator * (const double &) const;
     /**
     * \brief - unaire (c'est-à- dire opposé d'un vecteur)
     **/
-    Vecteur2D operator - () const;
+    Point operator - () const;
 
     /**
-    * \ brief Operateur de conversion Vecteur2D ===> string.
+    * \ brief Operateur de conversion Point ===> string.
     * \details convertit les coordonnées du vecteur en des chaines de caractères.
     */
     operator string() const;
@@ -91,7 +92,7 @@ public:
     * \param objet.
     * \return \e bool true si égalité et false sinon.
     */
-    bool operator==(const Vecteur2D&) const;
+    bool operator==(const Point&) const;
 
     /**
     * \ brief Test de différence avec un autre vecteur.
@@ -99,15 +100,15 @@ public:
     * \param objet.
     * \return \e bool true si inégalité et false sinon.
     */
-    bool operator != (const Vecteur2D&) const;
+    bool operator != (const Point&) const;
 
     /**
     * \ brief Opérateur d'affectation.
     * \details Affecte les données du vecteur passé aux différents champs \a x et \a y.
     * \param objet.
-    * \return \e Vecteur2D résultat de l'affectaion.
+    * \return \e Point résultat de l'affectaion.
     */
-    Vecteur2D operator = (const Vecteur2D &);
+    Point operator = (const Point &);
 
     /**
     * \ brief Surcharge l'affichage dans un flux.
@@ -115,23 +116,24 @@ public:
     * \param u.
     * \return \e ostream flux.
     */
-    friend ostream & operator << (ostream &, const Vecteur2D &);
+    friend ostream & operator << (ostream &, const Point &);
 
     /**
     * \ brief Calcul du déterminant(u , v).
     *\param v.
     * \return \e double det(u, v).
     */
-    double determinant(const Vecteur2D &) const;
+    double determinant(const Point &) const;
 
     /**
     * \ brief Opérateur de multiplication ordinaire d'un vecteur par un favetur réel a.
     * \param a, v.
     */
+    bool estDans(vector<Point>) const;
 };
 
-inline const Vecteur2D operator* (const double a, const Vecteur2D & v){
+inline const Point operator* (const double a, const Point & v){
     return v * a;
 }
 
-#endif // VECTEUR2D_H
+#endif // Point_H

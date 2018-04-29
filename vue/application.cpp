@@ -2,7 +2,8 @@
 
 Application::Application() : QMainWindow(){
     this->carapace = Carapace(this);
-    this->controleur = Controleur(&this->carapace);
+    this->generateurCarapaceAlea = GenerateurCarapaceAlea(&this->carapace);
+    this->generateurCarapaceParfaite = GenerateurCarapaceParfaite(&this->carapace);
     this->genererInterface();
     this->genererMenu();
     this->genererBarreOutils();
@@ -135,24 +136,25 @@ void Application::afficherCacherSites(){
             this->listeCercleSites.push_back(this->sceneDessin->addEllipse(this->carapace.getSites()[i].getX() * this->unite, this->carapace.getSites()[i].getY() * this->unite, 3, 3, pen, brush));
         }
     }
-    else
+    else{
         for(size_t i = 0 ; i < this->listeCercleSites.size() ; i++)
             this->sceneDessin->removeItem(this->listeCercleSites[i]);
-
+        this->listeCercleSites.clear();
+    }
 }
 
 void Application::genererCarapace(){
-    this->controleur.genererCarapace();
+    this->generateurCarapaceAlea.genererCarapace();
 }
 
 void Application::genererNouveauxSites(){
-    this->controleur.genererNouveauxSites(false);
+    this->generateurCarapaceAlea.genererNouveauxSites();
 }
 
 void Application::genererNouveauxSitesParfaits(){
-    this->controleur.genererNouveauxSites(true);
+    this->generateurCarapaceParfaite.genererNouveauxSites();
 }
 
 void Application::genererCarapaceParfaite(){
-    this->controleur.genererCarapaceParfaite();
+    this->generateurCarapaceParfaite.genererCarapace();
 }
