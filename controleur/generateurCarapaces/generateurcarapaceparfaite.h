@@ -8,7 +8,7 @@ public:
     //TODO destructeur
     GenerateurCarapaceParfaite();
     GenerateurCarapaceParfaite(Carapace *);
-    vector<Point> calculPositionSites(const Bezier *) const;
+    vector<Point *> calculPositionSites(const Bezier *) const;
 };
 
 #endif // GENERATEURCARAPACEPARFAITE_H

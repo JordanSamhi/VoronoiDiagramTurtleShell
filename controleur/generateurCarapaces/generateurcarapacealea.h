@@ -7,7 +7,7 @@ class GenerateurCarapaceAlea : public GenerateurCarapace{
 public:
     GenerateurCarapaceAlea();
     GenerateurCarapaceAlea(Carapace *);
-    vector<Point> calculPositionSites(const Bezier *) const;
+    vector<Point *> calculPositionSites(const Bezier *)const;
 };
 
 #endif // GENERATEURCARAPACEALEA_H

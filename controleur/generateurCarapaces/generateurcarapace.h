@@ -6,19 +6,20 @@
 #include "modele/carapace.h"
 #include "modele/bezier.h"
 #include "controleur/outils.h"
+#include "modele/triangulation/triangulationdelaunay.h"
 
 class GenerateurCarapace{
 private:
     Carapace *carapace;
 protected:
-    vector<Point> genererSitesPourCarapace(const Point &, const Point &, const Point &) const;
+    vector<Point *> genererSitesPourCarapace(const Point &, const Point &, const Point &) const;
 public:
-    static Point pointMilieuPrecedent;
+    static Point *pointMilieuPrecedent;
     //TODO destructeur
     GenerateurCarapace();
     GenerateurCarapace(Carapace *);
     void genererCarapace();
     void genererNouveauxSites()const;
-    virtual vector<Point> calculPositionSites(const Bezier *) const = 0;
+    virtual vector<Point *> calculPositionSites(const Bezier *) const = 0;
 };
 #endif // GENERATEURCARAPACE_H

@@ -16,7 +16,7 @@ public:
     void ajouterPoint(const Point &);
     const vector<Point>& getPointsControle()const;
     int taille() const;
-    Point bezier(const double &) const;
+    Point *bezier(const double &) const;
 };
 
 #endif // BEZIER_H

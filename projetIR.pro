@@ -17,7 +17,6 @@ QT += widgets
 SOURCES += \
         main.cpp \
     vue/application.cpp \
-    modele/Point.cpp \
     modele/trianglepascal.cpp \
     modele/bernstein.cpp \
     modele/bezier.cpp \
@@ -25,7 +24,14 @@ SOURCES += \
     controleur/outils.cpp \
     controleur/generateurCarapaces/generateurcarapacealea.cpp \
     controleur/generateurCarapaces/generateurcarapace.cpp \
-    controleur/generateurCarapaces/generateurcarapaceparfaite.cpp
+    controleur/generateurCarapaces/generateurcarapaceparfaite.cpp \
+    modele/triangulation/triangulationdelaunay.cpp \
+    modele/triangulation/anglecapable.cpp \
+    modele/triangulation/triangle.cpp \
+    modele/triangulation/cercle.cpp \
+    modele/triangulation/equationdroite.cpp \
+    modele/triangulation/equationdroiteverticale.cpp \
+    modele/point.cpp
 
 RESOURCES += qml.qrc
 
@@ -42,7 +48,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     vue/application.h \
-    modele/Point.h \
     modele/trianglepascal.h \
     modele/bernstein.h \
     modele/bezier.h \
@@ -50,4 +55,13 @@ HEADERS += \
     controleur/outils.h \
     controleur/generateurCarapaces/generateurcarapacealea.h \
     controleur/generateurCarapaces/generateurcarapace.h \
-    controleur/generateurCarapaces/generateurcarapaceparfaite.h
+    controleur/generateurCarapaces/generateurcarapaceparfaite.h \
+    modele/triangulation/triangulationdelaunay.h \
+    modele/triangulation/anglecapable.h \
+    modele/triangulation/triangle.h \
+    modele/triangulation/cercle.h \
+    modele/triangulation/equationdroite.h \
+    modele/triangulation/equationdroiteverticale.h \
+    controleur/erreur.h \
+    modele/point.h \
+    modele/vecteur2d.h

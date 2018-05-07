@@ -83,10 +83,16 @@ void Application::genererMenu(){
     this->actionCacherMontrerSites->setCheckable(true);
     this->actionCacherMontrerSites->setIcon(QIcon(":/icones/site"));
     this->actionCacherMontrerSites->setToolTip("Afficher/Cacher sites");
+    this->actionCacherMontrerTriangulation = new QAction("Afficher/Cacher triangulation", this);
+    this->actionCacherMontrerTriangulation->setCheckable(true);
+    this->actionCacherMontrerTriangulation->setIcon(QIcon(":/icones/triangle"));
+    this->actionCacherMontrerTriangulation->setToolTip("Afficher/Cacher triangulation");
     this->menuFichier->addAction(this->actionQuitter);
     this->menuAffichage->addAction(this->actionCacherMontrerSites);
+    this->menuAffichage->addAction(this->actionCacherMontrerTriangulation);
     QObject::connect(this->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     QObject::connect(this->actionCacherMontrerSites, SIGNAL(changed()), this, SLOT(afficherCacherSites()));
+    QObject::connect(this->actionCacherMontrerTriangulation, SIGNAL(changed()), this, SLOT(afficherCacherTriangulation()));
 }
 
 void Application::genererBarreOutils(){
@@ -94,6 +100,7 @@ void Application::genererBarreOutils(){
     this->barreOutils->setMovable(false);
     this->barreOutils->addAction(this->actionQuitter);
     this->barreOutils->addAction(this->actionCacherMontrerSites);
+    this->barreOutils->addAction(this->actionCacherMontrerTriangulation);
 }
 
 const Carapace & Application::getCarapace() const{
@@ -101,14 +108,24 @@ const Carapace & Application::getCarapace() const{
 }
 
 void Application::update(){
+    //TODO diviser cette methode en plusieurs méthodes de dessin
     this->sceneDessin->clear();
+    //Affichage contours
+    this->dessinerContours();
+    //Affichage sites
+    this->afficherCacherSites();
+    //Affichage Triangulation
+    this->afficherCacherTriangulation();
+}
+
+void Application::dessinerContours(){
     //Listes de points
     QVector<QPointF> pointsHaut, pointsBas;
     //Assemblages des points dans des "paths"
     QPainterPath contourHaut, contourBas;
     for(size_t i = 0 ; i < this->carapace.getContourHaut().size() ; i++){
-        pointsHaut.push_back(QPoint(this->carapace.getContourHaut()[i].getX() * this->unite, this->carapace.getContourHaut()[i].getY() * this->unite));
-        pointsBas.push_back(QPoint(this->carapace.getContourBas()[i].getX() * this->unite, this->carapace.getContourBas()[i].getY() * this->unite));
+        pointsHaut.push_back(QPoint(this->carapace.getContourHaut()[i]->getX() * this->unite, this->carapace.getContourHaut()[i]->getY() * this->unite));
+        pointsBas.push_back(QPoint(this->carapace.getContourBas()[i]->getX() * this->unite, this->carapace.getContourBas()[i]->getY() * this->unite));
     }
     if(!pointsHaut.isEmpty() && !pointsBas.isEmpty()){
         contourHaut = QPainterPath(pointsHaut.front());
@@ -118,28 +135,41 @@ void Application::update(){
         contourHaut.lineTo(pointsHaut[i]);
         contourBas.lineTo(pointsBas[i]);
     }
-
-    //Gestion sites
-    this->afficherCacherSites();
-
     this->sceneDessin->addPath(contourHaut);
     this->sceneDessin->addPath(contourBas);
 }
 
 void Application::afficherCacherSites(){
+    QPen pen(Qt::black, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QBrush brush(Qt::black);
     if(this->actionCacherMontrerSites->isChecked()){
-        //SITES en points noirs
-        QPen pen(Qt::black, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-        QBrush brush(Qt::black);
         this->listeCercleSites.clear();
-        for(size_t i = 0 ; i < this->carapace.getSites().size() ; i++){
-            this->listeCercleSites.push_back(this->sceneDessin->addEllipse(this->carapace.getSites()[i].getX() * this->unite, this->carapace.getSites()[i].getY() * this->unite, 3, 3, pen, brush));
-        }
+        for(size_t i = 0 ; i < this->carapace.getSites().size() ; i++)
+            this->listeCercleSites.push_back(this->sceneDessin->addEllipse(this->carapace.getSites()[i]->getX() * this->unite, this->carapace.getSites()[i]->getY() * this->unite, 3, 3, pen, brush));
     }
     else{
         for(size_t i = 0 ; i < this->listeCercleSites.size() ; i++)
             this->sceneDessin->removeItem(this->listeCercleSites[i]);
         this->listeCercleSites.clear();
+    }
+}
+
+void Application::afficherCacherTriangulation(){
+    QPolygon poly;
+    if(this->actionCacherMontrerTriangulation->isChecked()){
+        this->listePolygonsDessin.clear();
+        for(Triangle * triangle : this->carapace.getTriangles()){
+            poly.clear();
+            for(Point * p : triangle->getLesTroisPoints()){
+                poly << QPoint(p->getX() * this->unite, p->getY() * this->unite);
+            }
+            this->listePolygonsDessin.push_back(this->sceneDessin->addPolygon(poly));
+        }
+    }
+    else{
+        for(size_t i = 0 ; i < this->listePolygonsDessin.size() ; i++)
+            this->sceneDessin->removeItem(this->listePolygonsDessin[i]);
+        this->listePolygonsDessin.clear();
     }
 }
 

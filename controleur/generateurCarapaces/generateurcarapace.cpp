@@ -1,6 +1,6 @@
 #include "generateurcarapace.h"
 
-Point GenerateurCarapace::pointMilieuPrecedent;
+Point *GenerateurCarapace::pointMilieuPrecedent;
 
 GenerateurCarapace::GenerateurCarapace(){}
 
@@ -8,26 +8,27 @@ GenerateurCarapace::GenerateurCarapace(Carapace *c):carapace(c){}
 
 void GenerateurCarapace::genererCarapace(){
     Bezier bez;
-    Point pointDebut, pointMilieu, pointFin;
+    Point *pointDebut, *pointMilieu, *pointFin;
     //Détermination des points
     int origine = 0, limiteDroite = 10;
-    pointDebut = Point(origine, 0);
-    pointFin = Point(limiteDroite, 0);
+    pointDebut = new Point(origine, 0);
+    pointFin = new Point(limiteDroite, 0);
     pointMilieu = Outils::calculerPointDeControleMilieu(pointDebut, pointFin);
 
     //Sauvegarde du milieu precedent dans la classe
     pointMilieuPrecedent = pointMilieu;
 
-    bez.ajouterPoint(pointDebut);
-    bez.ajouterPoint(pointMilieu);
-    bez.ajouterPoint(pointFin);
+    //FIXME SI POSE PROBLEME VOIR POINTEURS
+    bez.ajouterPoint(*pointDebut);
+    bez.ajouterPoint(*pointMilieu);
+    bez.ajouterPoint(*pointFin);
 
-    vector<Point> contourHaut, contourBas;
-    Point pointResultat;
+    vector<Point *> contourHaut, contourBas;
+    Point * pointResultat;
     for (double t = 0; t <= 1; t += 0.01){
         pointResultat = bez.bezier(t);
         contourHaut.push_back(pointResultat);
-        pointResultat.setY(-pointResultat.getY());
+        pointResultat = new Point(pointResultat->getX(), -pointResultat->getY());
         contourBas.push_back(pointResultat);
     }
     contourHaut.push_back(pointFin);
@@ -35,9 +36,13 @@ void GenerateurCarapace::genererCarapace(){
 
     this->carapace->setContourHaut(contourHaut);
     this->carapace->setContourBas(contourBas);
-    this->carapace->setSites(this->genererSitesPourCarapace(pointDebut, pointMilieu, pointFin));
+    this->carapace->setSites(this->genererSitesPourCarapace(*pointDebut, *pointMilieu, *pointFin));
+
+    //Triangulation
+    TriangulationDelaunay triangulation(this->carapace->getSites());
+    this->carapace->setTriangles(triangulation.getTriangulation());
 }
-vector<Point> GenerateurCarapace::genererSitesPourCarapace(const Point & pointDebut, const Point & pointMilieu, const Point & pointFin) const{
+vector<Point *> GenerateurCarapace::genererSitesPourCarapace(const Point & pointDebut, const Point & pointMilieu, const Point & pointFin) const{
     Bezier bez;
     int longueurCarapace, dixPourcentLongueurCarapace, quarantePourcentHauteurPointMilieu;
     longueurCarapace = pointFin.getX() - pointDebut.getX();
@@ -52,11 +57,14 @@ vector<Point> GenerateurCarapace::genererSitesPourCarapace(const Point & pointDe
 }
 
 void GenerateurCarapace::genererNouveauxSites() const{
-    Point pointDebut, pointFin, pointMilieu;
+    Point *pointDebut, *pointFin, *pointMilieu;
     if(!this->carapace->getContourHaut().empty()){
         pointDebut = this->carapace->getContourHaut()[0];
         pointFin = this->carapace->getContourHaut()[this->carapace->getContourHaut().size()-1];
         pointMilieu = GenerateurCarapace::pointMilieuPrecedent;
-        this->carapace->setSites(this->genererSitesPourCarapace(pointDebut, pointMilieu, pointFin));
+        this->carapace->setSites(this->genererSitesPourCarapace(*pointDebut, *pointMilieu, *pointFin));
+        //Triangulation
+        TriangulationDelaunay triangulation(this->carapace->getSites());
+        this->carapace->setTriangles(triangulation.getTriangulation());
     }
 }

@@ -8,5 +8,6 @@
         <file alias="/icones/sitesRanges">icones/sitesRanges.png</file>
         <file alias="/icones/carapaceRouge">icones/carapaceRouge.png</file>
         <file alias="/icones/carapaceVerte">icones/carapaceVerte.png</file>
+        <file alias="/icones/triangle">icones/triangle.png</file>
     </qresource>
 </RCC>

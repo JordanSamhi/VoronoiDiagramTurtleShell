@@ -17,7 +17,7 @@ int Bezier::taille() const{
 }
 
 
-Point Bezier::bezier(const double & t) const{
+Point* Bezier::bezier(const double & t) const{
     int m = taille() - 1;
     double resultatX = 0, resultatY = 0;
     TrianglePascal tp(m);
@@ -27,6 +27,6 @@ Point Bezier::bezier(const double & t) const{
         resultatX += (d * this->pointsDeControle[i].getX());
         resultatY += (d * this->pointsDeControle[i].getY());
     }
-    return Point(resultatX, resultatY);
+    return new Point(resultatX, resultatY);
 }
 

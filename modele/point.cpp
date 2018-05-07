@@ -1,70 +1,52 @@
-#include "Point.h"
+#include "point.h"
 
-Point::Point(const double & x, const double & y): x(x), y(y){}
 
-Point::Point(const Point & v) : x(v.x), y(v.y)
-{}
+Point::Point(const double & x, const double & y) : x(x), y(y) {}
 
-Point::~Point(){}
+Point::Point(const Point & p) : x(p.x), y(p.y) {}
+
+Point::~Point() {}
 
 double Point::getX() const{
-    return this->x;
-}
-
-void Point::setX(const double & nouveauX){
-    this->x = nouveauX;
+    return x;
 }
 
 double Point::getY() const{
-    return this->y;
+    return y;
 }
 
-void Point::setY(const double &nouveauY){
-    this->y = nouveauY;
+void Point::setX(const double & nouveauX){
+    x = nouveauX;
 }
 
-Point Point::operator + (const Point & u) const{
-    return Point(this->x + u.x, this->y + u.y);
-}
-
-Point Point::operator * (const double & a) const{
-    return Point(this->x * a, this->y * a);
-}
-
-Point Point::operator - () const{
-    return Point(-this->x, -this->y);
+void Point::setY(const double & nouveauY){
+    y = nouveauY;
 }
 
 Point::operator string() const{
     ostringstream oss;
-    oss << "(" << this->x << "," << this->y << ")";
+    oss << "(" << x << "," << y << ")";
     return oss.str();
 }
 
-bool Point::operator==(const Point& v) const{
-    return (this->x == v.getX() && this->y == (v.getY()));
+bool Point::operator==(const Point & p) const{
+    return (fabs(x - p.getX()) < 0.0001 && fabs(y - p.getY()) < 0.0001);
 }
 
-bool Point::operator != (const Point&  v) const{
-    return !(*this == v);
+bool Point::operator != (const Point &  p) const{
+    return !(*this == p);
 }
 
-Point Point::operator = (const Point & v){
-    if (this != &v){
-        this->x = v.getX();
-        this->y = v.getY();
-    }
-    return *this;
-}
-
-bool Point::estDans(vector<Point> points) const{
-    for (int i = 0; i < 3; i++)
-        if (*this == points[i])
+bool Point::estDans(vector<Point *> points) const{
+    for(const Point * point : points)
+        if (this == point)
             return true;
     return false;
 }
-
-ostream & operator << (ostream & os, const Point & u){
-    os << "(" << u.getX() << "," << u.getY() << ")";
-    return os;
+const Point & Point::operator = (const Point & p){
+    if (this != &p){
+        x = p.getX();
+        y = p.getY();
+    }
+    return *this;
 }

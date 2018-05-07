@@ -21,6 +21,7 @@
 #include <QPainterPath>
 #include <QGraphicsItem>
 #include <QToolBar>
+#include <QGraphicsPolygonItem>
 #include <QResizeEvent>
 #include "modele/carapace.h"
 #include "controleur/generateurCarapaces/generateurcarapacealea.h"
@@ -42,6 +43,7 @@ public slots:
     void genererCarapace();
     void genererNouveauxSites();
     void afficherCacherSites();
+    void afficherCacherTriangulation();
     void genererCarapaceParfaite();
     void genererNouveauxSitesParfaits();
 private:
@@ -52,8 +54,9 @@ private:
     QGraphicsView *vueDessin;
     QGraphicsScene *sceneDessin;
     QMenu *menuFichier, *menuAffichage;
-    QAction *actionQuitter, *actionCacherMontrerSites;
+    QAction *actionQuitter, *actionCacherMontrerSites, *actionCacherMontrerTriangulation;
     vector<QGraphicsEllipseItem *> listeCercleSites;
+    vector<QGraphicsPolygonItem *> listePolygonsDessin;
     QToolBar * barreOutils;
 
     Carapace carapace;
@@ -65,6 +68,7 @@ private:
     void sizeAndCenterWindow();
     void genererMenu();
     void genererBarreOutils();
+    void dessinerContours();
 };
 
 #endif // APPLICATION_H
