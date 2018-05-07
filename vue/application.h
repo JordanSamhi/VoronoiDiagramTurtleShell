@@ -44,6 +44,7 @@ public slots:
     void genererNouveauxSites();
     void afficherCacherSites();
     void afficherCacherTriangulation();
+    void afficherCacherCerclesCirconscrits();
     void genererCarapaceParfaite();
     void genererNouveauxSitesParfaits();
 private:
@@ -54,8 +55,8 @@ private:
     QGraphicsView *vueDessin;
     QGraphicsScene *sceneDessin;
     QMenu *menuFichier, *menuAffichage;
-    QAction *actionQuitter, *actionCacherMontrerSites, *actionCacherMontrerTriangulation;
-    vector<QGraphicsEllipseItem *> listeCercleSites;
+    QAction *actionQuitter, *actionCacherMontrerSites, *actionCacherMontrerTriangulation, *actionCacherMontrerCerclesCirconscrits;
+    vector<QGraphicsEllipseItem *> listeCercleSites, listeCerclesCirconscritsDessin;
     vector<QGraphicsPolygonItem *> listePolygonsDessin;
     QToolBar * barreOutils;
 

@@ -87,12 +87,18 @@ void Application::genererMenu(){
     this->actionCacherMontrerTriangulation->setCheckable(true);
     this->actionCacherMontrerTriangulation->setIcon(QIcon(":/icones/triangle"));
     this->actionCacherMontrerTriangulation->setToolTip("Afficher/Cacher triangulation");
+    this->actionCacherMontrerCerclesCirconscrits = new QAction("Afficher/Cacher cercles circonscrits", this);
+    this->actionCacherMontrerCerclesCirconscrits->setCheckable(true);
+    this->actionCacherMontrerCerclesCirconscrits->setIcon(QIcon(":/icones/cercle"));
+    this->actionCacherMontrerCerclesCirconscrits->setToolTip("Afficher/Cacher cercles circonscrits");
     this->menuFichier->addAction(this->actionQuitter);
     this->menuAffichage->addAction(this->actionCacherMontrerSites);
     this->menuAffichage->addAction(this->actionCacherMontrerTriangulation);
+    this->menuAffichage->addAction(this->actionCacherMontrerCerclesCirconscrits);
     QObject::connect(this->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     QObject::connect(this->actionCacherMontrerSites, SIGNAL(changed()), this, SLOT(afficherCacherSites()));
     QObject::connect(this->actionCacherMontrerTriangulation, SIGNAL(changed()), this, SLOT(afficherCacherTriangulation()));
+    QObject::connect(this->actionCacherMontrerCerclesCirconscrits, SIGNAL(changed()), this, SLOT(afficherCacherCerclesCirconscrits()));
 }
 
 void Application::genererBarreOutils(){
@@ -101,6 +107,7 @@ void Application::genererBarreOutils(){
     this->barreOutils->addAction(this->actionQuitter);
     this->barreOutils->addAction(this->actionCacherMontrerSites);
     this->barreOutils->addAction(this->actionCacherMontrerTriangulation);
+    this->barreOutils->addAction(this->actionCacherMontrerCerclesCirconscrits);
 }
 
 const Carapace & Application::getCarapace() const{
@@ -116,6 +123,8 @@ void Application::update(){
     this->afficherCacherSites();
     //Affichage Triangulation
     this->afficherCacherTriangulation();
+    //Affichage des cercles circonscrits
+    this->afficherCacherCerclesCirconscrits();
 }
 
 void Application::dessinerContours(){
@@ -142,10 +151,13 @@ void Application::dessinerContours(){
 void Application::afficherCacherSites(){
     QPen pen(Qt::black, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QBrush brush(Qt::black);
+    int rayon = 2;
     if(this->actionCacherMontrerSites->isChecked()){
         this->listeCercleSites.clear();
         for(size_t i = 0 ; i < this->carapace.getSites().size() ; i++)
-            this->listeCercleSites.push_back(this->sceneDessin->addEllipse(this->carapace.getSites()[i]->getX() * this->unite, this->carapace.getSites()[i]->getY() * this->unite, 3, 3, pen, brush));
+            this->listeCercleSites.push_back(this->sceneDessin->addEllipse(this->carapace.getSites()[i]->getX() * this->unite,
+                                                                           this->carapace.getSites()[i]->getY() * this->unite,
+                                                                           rayon * 2, rayon * 2, pen, brush));
     }
     else{
         for(size_t i = 0 ; i < this->listeCercleSites.size() ; i++)
@@ -160,9 +172,8 @@ void Application::afficherCacherTriangulation(){
         this->listePolygonsDessin.clear();
         for(Triangle * triangle : this->carapace.getTriangles()){
             poly.clear();
-            for(Point * p : triangle->getLesTroisPoints()){
+            for(Point * p : triangle->getLesTroisPoints())
                 poly << QPoint(p->getX() * this->unite, p->getY() * this->unite);
-            }
             this->listePolygonsDessin.push_back(this->sceneDessin->addPolygon(poly));
         }
     }
@@ -170,6 +181,24 @@ void Application::afficherCacherTriangulation(){
         for(size_t i = 0 ; i < this->listePolygonsDessin.size() ; i++)
             this->sceneDessin->removeItem(this->listePolygonsDessin[i]);
         this->listePolygonsDessin.clear();
+    }
+}
+
+void Application::afficherCacherCerclesCirconscrits(){
+    QPen pen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QBrush brush(Qt::black);
+    if(this->actionCacherMontrerCerclesCirconscrits->isChecked()){
+        this->listeCerclesCirconscritsDessin.clear();
+        for(Triangle * t : this->carapace.getTriangles())
+            this->listeCerclesCirconscritsDessin.push_back(this->sceneDessin->addEllipse((t->getCercle().getCentre().getX() - t->getCercle().getRayon()) * this->unite,
+                                                                                         (t->getCercle().getCentre().getY() - t->getCercle().getRayon()) * this->unite,
+                                                                                         t->getCercle().getRayon() * 2 * this->unite,
+                                                                                         t->getCercle().getRayon() * 2 * this->unite));
+    }
+    else{
+        for(QGraphicsEllipseItem * ellipse : this->listeCerclesCirconscritsDessin)
+            this->sceneDessin->removeItem(ellipse);
+        this->listeCerclesCirconscritsDessin.clear();
     }
 }
 
