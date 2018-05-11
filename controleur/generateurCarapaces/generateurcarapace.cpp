@@ -18,7 +18,6 @@ void GenerateurCarapace::genererCarapace(){
     //Sauvegarde du milieu precedent dans la classe
     pointMilieuPrecedent = pointMilieu;
 
-    //FIXME SI POSE PROBLEME VOIR POINTEURS
     bez.ajouterPoint(*pointDebut);
     bez.ajouterPoint(*pointMilieu);
     bez.ajouterPoint(*pointFin);
@@ -41,6 +40,12 @@ void GenerateurCarapace::genererCarapace(){
     //Triangulation
     TriangulationDelaunay triangulation(this->carapace->getSites());
     this->carapace->setTriangles(triangulation.getTriangulation());
+
+    //Diagramme voronoi
+    DiagrammeVoronoi *diagrammeVoronoi = new DiagrammeVoronoi(this->carapace);
+    this->carapace->setVoronoi(diagrammeVoronoi);
+
+    this->carapace->updateVue();
 }
 vector<Point *> GenerateurCarapace::genererSitesPourCarapace(const Point & pointDebut, const Point & pointMilieu, const Point & pointFin) const{
     Bezier bez;
@@ -66,5 +71,8 @@ void GenerateurCarapace::genererNouveauxSites() const{
         //Triangulation
         TriangulationDelaunay triangulation(this->carapace->getSites());
         this->carapace->setTriangles(triangulation.getTriangulation());
+        DiagrammeVoronoi *diagrammeVoronoi = new DiagrammeVoronoi(this->carapace);
+        this->carapace->setVoronoi(diagrammeVoronoi);
+        this->carapace->updateVue();
     }
 }

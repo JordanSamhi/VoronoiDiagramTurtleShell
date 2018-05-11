@@ -2,10 +2,11 @@
 #define EQUATIONDROITE_H
 
 #include "modele/point.h"
+#include "modele/triangulation/equationdroitebase.h"
 
 using namespace std;
 
-class EquationDroite {
+class EquationDroite : public EquationDroiteBase{
 private:
     double a, b; // y = ax + b
 public:
@@ -17,8 +18,7 @@ public:
     double getB()const;
     void setA(const double &);
     void setB(const double &);
+    EquationDroite * getEquationDroitePerpendiculairePassantParPoint(Point *)const;
 };
-inline ostream & operator <<(ostream & f, const EquationDroite & ed) {
-    return f << (string)ed;
-}
+
 #endif

@@ -21,8 +21,6 @@ private:
     vector<Triangle*> DT;
     vector<Point*> points;
 public:
-    //TODO A MODIFIER APRES CEST JUSTE POUR TESTER MAINTENANT
-    TriangulationDelaunay(Triangle *, Triangle *);
     TriangulationDelaunay(vector<Point *>);
     void calculerTriangulation(Point *);
     void determiner_DTL(const Point *, Triangle*, vector<Triangle*> *);

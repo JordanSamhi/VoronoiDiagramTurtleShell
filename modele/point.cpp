@@ -1,4 +1,5 @@
 #include "point.h"
+#include "modele/triangulation/equationdroite.h"
 
 
 Point::Point(const double & x, const double & y) : x(x), y(y) {}
@@ -49,4 +50,10 @@ const Point & Point::operator = (const Point & p){
         y = p.getY();
     }
     return *this;
+}
+
+bool Point::pointVerifieEquationDroite(EquationDroite * e) const{
+    if(this->getY() == (e->getA() * this->getX() + e->getB()))
+        return true;
+    return false;
 }

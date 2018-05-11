@@ -1,18 +1,5 @@
 #include "TriangulationDelaunay.h"
 
-//TODO VOIR POUR SUPPRIMER CAR PLUS UTILE
-TriangulationDelaunay::TriangulationDelaunay(Triangle * triangleFictif1, Triangle *triangleFictif2) :DT(), points() {
-    DT.push_back(triangleFictif1);
-    DT.push_back(triangleFictif2);
-
-    for (int i = 0; i < 3; i++) {
-        if (find(points.begin(), points.end(), triangleFictif1->getLesTroisPoints()[i]) == points.end())
-            points.push_back(triangleFictif1->getLesTroisPoints()[i]);
-        if (find(points.begin(), points.end(), triangleFictif2->getLesTroisPoints()[i]) == points.end())
-            points.push_back(triangleFictif2->getLesTroisPoints()[i]);
-    }
-}
-
 TriangulationDelaunay::TriangulationDelaunay(vector<Point *> points) {
     Triangle *triangleFictif1, *triangleFictif2;
     triangleFictif1 = NULL;
@@ -189,6 +176,8 @@ vector<Triangle *> TriangulationDelaunay::getTriangulation() {
         && !this->DT[i]->contientPoint(this->coinSuperieurDroit)
         && !this->DT[i]->contientPoint(this->coinSuperieurGauche))
             trianglesFinaux.push_back(this->DT[i]);
+        else
+            this->DT[i]->setNull(true);
     return trianglesFinaux;
 }
 

@@ -35,7 +35,7 @@ Triangle::~Triangle() {
 int Triangle::getNbVoisins() const{
     int nb = 0;
     for (Triangle * t : voisins)
-        if (t != NULL)
+        if (t != NULL && !t->isNull())
             nb++;
     return nb;
 }
@@ -182,6 +182,8 @@ void Triangle::calculerCercleCirconscrit(){
 
     double x1, y1, y2, y3;
 
+    Point *centre;
+
     x1 = lesTroisPoints[0]->getX();
     y1 = lesTroisPoints[0]->getY();
     y2 = lesTroisPoints[1]->getY();
@@ -193,7 +195,7 @@ void Triangle::calculerCercleCirconscrit(){
             throw Erreur("Ceci ne represente pas un triangle, 3 points alignees!!!");
         else{
             EquationDroite ed2(Outils::equationMediatriceOrdonneesPasEgales(lesTroisPoints[1], lesTroisPoints[2]));
-            Point centre = Outils::intersectionDroiteVerticaleEtAutre(ed1, ed2);
+            centre = Outils::intersectionDroiteVerticaleEtAutre(ed1, ed2);
             cercleCirconscrit.setCentre(centre);
         }
     }
@@ -202,17 +204,18 @@ void Triangle::calculerCercleCirconscrit(){
 
         if (y3 == y2){
             EquationDroiteVerticale ed2(Outils::equationMediatriceOrdonneesEgales(lesTroisPoints[1], lesTroisPoints[2]));
-            Point centre = Outils::intersectionDroiteVerticaleEtAutre(ed2, ed1);
+            centre = Outils::intersectionDroiteVerticaleEtAutre(ed2, ed1);
             cercleCirconscrit.setCentre(centre);
         }
         else{
             EquationDroite ed2(Outils::equationMediatriceOrdonneesPasEgales(lesTroisPoints[1], lesTroisPoints[2]));
-            Point centre = Outils::intersection2Droites(ed1, ed2);
+            centre = Outils::intersection2Droites(ed1, ed2);
             cercleCirconscrit.setCentre(centre);
         }
     }
-    rayon = sqrt((x1 - cercleCirconscrit.getCentre().getX()) * (x1 - cercleCirconscrit.getCentre().getX()) + (y1 - cercleCirconscrit.getCentre().getY()) * (y1 - cercleCirconscrit.getCentre().getY()));
+    rayon = sqrt((x1 - cercleCirconscrit.getCentre()->getX()) * (x1 - cercleCirconscrit.getCentre()->getX()) + (y1 - cercleCirconscrit.getCentre()->getY()) * (y1 - cercleCirconscrit.getCentre()->getY()));
     cercleCirconscrit.setRayon(rayon);
+    cercleCirconscrit.setTriangle(this);
 }
 
 const vector<Triangle *> & Triangle::getVoisins()const{
@@ -238,4 +241,44 @@ void Triangle::setCercle(const Cercle & c){
 
 void Triangle::setNull(const bool & n){
     this->null = n;
+}
+
+bool Triangle::estVoisinAvec(Triangle * t)const{
+    for(Triangle * voisin : this->voisins)
+        if(voisin == t)
+            return true;
+    return false;
+}
+
+//FIXME Méthode très très très très moche, à modifier si j'ai le temps (juste pour les tests)
+//vector<vector<Point *>> Triangle::getAretesSansVoisin()const{
+//    vector<vector<Point *>> aretesCommunes;
+//    vector<vector<Point *>> aretesSansVoisin;
+//    vector<Point*> areteSansVoisin;
+//    for(Triangle * voisin : this->getVoisins())
+//        if(!voisin->isNull())
+//            aretesCommunes.push_back(this->getAreteCommune(voisin));
+//    for(Point * p1 : this->lesTroisPoints){
+//        for(Point * p2 : this->lesTroisPoints){
+//            if(p1 != p2){
+//                for(vector<Point*> arete : aretesCommunes){
+//                    if((p1 == arete[0] && p2 != arete[1]) || (p1 == arete[1] && p2 != arete[0])){
+//                        areteSansVoisin.push_back(p1);
+//                        areteSansVoisin.push_back(p2);
+//                        aretesSansVoisin.push_back(areteSansVoisin);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    return aretesSansVoisin;
+//}
+vector<vector<Point *>> Triangle::getAretesSansVoisin()const{
+    vector<vector<Point *>> aretesSansVoisin;
+    for(Triangle * voisin : this->voisins){
+        if(voisin->isNull()){
+            aretesSansVoisin.push_back(this->getAreteCommune(voisin));
+        }
+    }
+    return aretesSansVoisin;
 }

@@ -31,7 +31,14 @@ SOURCES += \
     modele/triangulation/cercle.cpp \
     modele/triangulation/equationdroite.cpp \
     modele/triangulation/equationdroiteverticale.cpp \
-    modele/point.cpp
+    modele/point.cpp \
+    modele/diagrammeVoronoi/face.cpp \
+    modele/diagrammeVoronoi/arete.cpp \
+    modele/diagrammeVoronoi/graphe.cpp \
+    modele/diagrammeVoronoi/sommet.cpp \
+    modele/diagrammeVoronoi/diagrammevoronoi.cpp \
+    modele/triangulation/equationdroitebase.cpp \
+    modele/diagrammeVoronoi/segment.cpp
 
 RESOURCES += qml.qrc
 
@@ -64,4 +71,13 @@ HEADERS += \
     modele/triangulation/equationdroiteverticale.h \
     controleur/erreur.h \
     modele/point.h \
-    modele/vecteur2d.h
+    modele/vecteur2d.h \
+    modele/diagrammeVoronoi/face.h \
+    modele/diagrammeVoronoi/arete.h \
+    modele/diagrammeVoronoi/element.h \
+    modele/diagrammeVoronoi/graphe.h \
+    modele/diagrammeVoronoi/listecirculaire.h \
+    modele/diagrammeVoronoi/sommet.h \
+    modele/diagrammeVoronoi/diagrammevoronoi.h \
+    modele/triangulation/equationdroitebase.h \
+    modele/diagrammeVoronoi/segment.h

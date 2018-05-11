@@ -26,3 +26,7 @@ double EquationDroiteVerticale::getC()const{
 void EquationDroiteVerticale::setC(const double & c){
     this->c = c;
 }
+
+EquationDroite *EquationDroiteVerticale::getEquationDroitePerpendiculairePassantParPoint(Point * p) const{
+    return new EquationDroite(0, p->getY());
+}

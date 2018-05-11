@@ -43,6 +43,26 @@ void Carapace::setTriangles(const vector<Triangle *> & triangles){
     this->triangles.clear();
     for(Triangle * t: triangles)
         this->triangles.push_back(t);
+}
+
+void Carapace::updateVue()const{
     //TODO NE PAS APPELER UPDATE ICI, CHANGER ULTERIEUREMENT, CEST JUSTE POUR LES TESTS
     this->application->update();
+}
+
+DiagrammeVoronoi * Carapace::getVoronoi()const{
+    return this->voronoi;
+}
+
+void Carapace::setVoronoi(DiagrammeVoronoi * dv){
+    this->voronoi = dv;
+}
+
+vector<Point *> Carapace::getTousLesPointsDuContour()const{
+    vector<Point *> tousLesPoints;
+    for(Point * p : this->contourBas)
+        tousLesPoints.push_back(p);
+    for(Point * p : this->contourHaut)
+        tousLesPoints.push_back(p);
+    return tousLesPoints;
 }

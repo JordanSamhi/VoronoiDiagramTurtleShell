@@ -7,6 +7,7 @@
 #include "modele/bezier.h"
 #include "controleur/outils.h"
 #include "modele/triangulation/triangulationdelaunay.h"
+#include "modele/diagrammeVoronoi/diagrammevoronoi.h"
 
 class GenerateurCarapace{
 private:

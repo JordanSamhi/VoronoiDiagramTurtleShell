@@ -38,9 +38,11 @@ public:
     const vector<Triangle *> & getVoisins()const;
     const vector<Point *> & getLesTroisPoints()const;
     const Cercle & getCercle()const;
-    bool isNull()const;//TODO TROUVER MIEUX QUE CA
+    bool isNull()const;
     void setCercle(const Cercle &);
     void setNull(const bool &);
+    bool estVoisinAvec(Triangle *) const;
+    vector<vector<Point *>> getAretesSansVoisin()const;
 };
 inline ostream & operator <<(ostream & f, const Triangle & t) {
     return f << (string)t;

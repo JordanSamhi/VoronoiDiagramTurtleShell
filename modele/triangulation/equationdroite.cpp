@@ -30,3 +30,9 @@ void EquationDroite::setA(const double & a){
 void EquationDroite::setB(const double & b){
     this->b = b;
 }
+
+EquationDroite *EquationDroite::getEquationDroitePerpendiculairePassantParPoint(Point * p) const{
+    double aP = -1/(this->a);
+    double bP = p->getY() + ((1/this->a) * p->getX());
+    return new EquationDroite(aP, bP);
+}

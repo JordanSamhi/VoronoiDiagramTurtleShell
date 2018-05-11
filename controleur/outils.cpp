@@ -31,24 +31,24 @@ bool Outils::pointEstDansTriangle(const Point * point, const Triangle * triangle
 
 bool Outils::appartientACercle(const Point * point, const Cercle * cercle) {
     double distance;
-    distance = sqrt((cercle->getCentre().getX() - point->getX())*(cercle->getCentre().getX() - point->getX()) + (cercle->getCentre().getY() - point->getY())*(cercle->getCentre().getY() - point->getY()));
+    distance = sqrt((cercle->getCentre()->getX() - point->getX())*(cercle->getCentre()->getX() - point->getX()) + (cercle->getCentre()->getY() - point->getY())*(cercle->getCentre()->getY() - point->getY()));
     return distance <= cercle->getRayon();
 }
 
-const Point Outils::intersection2Droites(const EquationDroite & ed1, const EquationDroite & ed2) {
+Point *Outils::intersection2Droites(const EquationDroite & ed1, const EquationDroite & ed2) {
     double xInter, yInter;
     if (fabs(ed2.getA() - ed1.getA()) < 0.0001)
         throw Erreur("Pas d'intersection, les deux droites sont parallèles");
     xInter = (ed1.getB() - ed2.getB()) / (ed2.getA() - ed1.getA());
     yInter = ed1.getA() * xInter + ed1.getB();
-    return Point(xInter, yInter);
+    return new Point(xInter, yInter);
 }
 
-const Point Outils::intersectionDroiteVerticaleEtAutre(const EquationDroiteVerticale & ed1, const EquationDroite & ed2) {
+Point *Outils::intersectionDroiteVerticaleEtAutre(const EquationDroiteVerticale & ed1, const EquationDroite & ed2) {
     double xInter, yInter;
     xInter = ed1.getC();
     yInter = ed2.getA() * xInter + ed2.getB();
-    return Point(xInter, yInter);
+    return new Point(xInter, yInter);
 }
 
 const EquationDroiteVerticale Outils::equationMediatriceOrdonneesEgales(const Point * p1, const Point * p2) {
@@ -115,4 +115,88 @@ double Outils::getyMin(const vector<Point *> & points){
         if (p->getY() < yMin)
             yMin = p->getY();
     return yMin - 1;
+}
+
+Triangle * Outils::getTriangleParCentreCercleCirconscrit(Point * point,const vector<Triangle *>& triangles){
+    for(Triangle * triangle : triangles)
+        if(triangle->getCercle().getCentre() == point)
+            return triangle;
+    return NULL;
+}
+
+vector<Triangle *> Outils::getTrianglesAyantMoinsDeTroisVoisins(const vector<Triangle*> & triangles){
+    vector<Triangle*> trianglesAyantMoinsDeTroisVoisins;
+    for(Triangle * triangle : triangles)
+        if(triangle->getNbVoisins() < 3)
+            trianglesAyantMoinsDeTroisVoisins.push_back(triangle);
+    return trianglesAyantMoinsDeTroisVoisins;
+}
+
+bool Outils::pointEstSurSegment(Point * p, Segment * s){
+    //TODO voir pour epsilon
+    Point *a, *b;
+    a = s->getA();
+    b = s->getB();
+    Vecteur2D *aB, *aP;
+    aB = new Vecteur2D(b->getX() - a->getX(), b->getY() - a->getY());
+    aP = new Vecteur2D(p->getX() - a->getX(), p->getY() - a->getY());
+    double coefX = aP->getX() / aB->getX();
+    double coefY = aP->getY() / aB->getY();
+    if((coefX - coefY) < 0.00000001 && coefX >= 0 && coefX <= 1)
+        return true;
+    return false;
+}
+
+double Outils::getDistanceEuclidienne(Point *a, Point *b){
+   return sqrt(((b->getX() - a->getX()) * (b->getX() - a->getX())) + ((b->getY() - a->getY()) * (b->getY() - a->getY())));
+}
+
+Point * Outils::getPointDuContourLePlusProche(Point * inter, const vector<Point *> &contour){
+    double max = DBL_MAX, distance;
+    Point * pt;
+    for(Point * point : contour){
+        distance = Outils::getDistanceEuclidienne(inter, point);
+        if(distance < max){
+            max = distance;
+            pt = point;
+        }
+    }
+    return pt;
+}
+
+Point * Outils::getPointMilieu(Point *p1, Point *p2){
+    double x, y;
+    x = (p1->getX() + p2->getX()) / 2;
+    y = (p1->getY() + p2->getY()) / 2;
+    return new Point(x, y);
+}
+
+vector<Point*> Outils::getAreteContenantPoint(const vector<vector<Point *>> & aretes, Point * point){
+    for(vector<Point *> arete : aretes)
+        if(arete.at(0) == point || arete.at(1) == point)
+            return arete;
+}
+
+Point * Outils::getPointLePlusAGauche(const vector<Point *> & points){
+    double min = DBL_MAX;
+    Point * point = NULL;
+    for(Point * p : points){
+        if(p->getX() < min){
+            min = p->getX();
+            point = p;
+        }
+    }
+    return point;
+}
+
+Point * Outils::getPointLePlusADroite(const vector<Point *> & points){
+    double max = DBL_MIN;
+    Point * point = NULL;
+    for(Point * p : points){
+        if(p->getX() > max){
+            max = p->getX();
+            point = p;
+        }
+    }
+    return point;
 }

@@ -91,14 +91,20 @@ void Application::genererMenu(){
     this->actionCacherMontrerCerclesCirconscrits->setCheckable(true);
     this->actionCacherMontrerCerclesCirconscrits->setIcon(QIcon(":/icones/cercle"));
     this->actionCacherMontrerCerclesCirconscrits->setToolTip("Afficher/Cacher cercles circonscrits");
+    this->actionCacherMontrerCentresCerclesCirconscrits = new QAction("Afficher/Cacher centres cercles circonscrits", this);
+    this->actionCacherMontrerCentresCerclesCirconscrits->setCheckable(true);
+    this->actionCacherMontrerCentresCerclesCirconscrits->setIcon(QIcon(":/icones/centreCercle"));
+    this->actionCacherMontrerCentresCerclesCirconscrits->setToolTip("Afficher/Cacher centres cercles circonscrits");
     this->menuFichier->addAction(this->actionQuitter);
     this->menuAffichage->addAction(this->actionCacherMontrerSites);
     this->menuAffichage->addAction(this->actionCacherMontrerTriangulation);
     this->menuAffichage->addAction(this->actionCacherMontrerCerclesCirconscrits);
+    this->menuAffichage->addAction(this->actionCacherMontrerCentresCerclesCirconscrits);
     QObject::connect(this->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     QObject::connect(this->actionCacherMontrerSites, SIGNAL(changed()), this, SLOT(afficherCacherSites()));
     QObject::connect(this->actionCacherMontrerTriangulation, SIGNAL(changed()), this, SLOT(afficherCacherTriangulation()));
     QObject::connect(this->actionCacherMontrerCerclesCirconscrits, SIGNAL(changed()), this, SLOT(afficherCacherCerclesCirconscrits()));
+    QObject::connect(this->actionCacherMontrerCentresCerclesCirconscrits, SIGNAL(changed()), this, SLOT(afficherCacherCentresCerclesCirconscrits()));
 }
 
 void Application::genererBarreOutils(){
@@ -108,6 +114,7 @@ void Application::genererBarreOutils(){
     this->barreOutils->addAction(this->actionCacherMontrerSites);
     this->barreOutils->addAction(this->actionCacherMontrerTriangulation);
     this->barreOutils->addAction(this->actionCacherMontrerCerclesCirconscrits);
+    this->barreOutils->addAction(this->actionCacherMontrerCentresCerclesCirconscrits);
 }
 
 const Carapace & Application::getCarapace() const{
@@ -125,6 +132,23 @@ void Application::update(){
     this->afficherCacherTriangulation();
     //Affichage des cercles circonscrits
     this->afficherCacherCerclesCirconscrits();
+    this->afficherCacherCentresCerclesCirconscrits();
+
+    //TODO ENLEVER CA juste pour tests
+    Element<Arete*> * l = NULL;
+    QPen pen(Qt::red);
+    pen.setWidth(2);
+    for (l = this->carapace.getVoronoi()->getGraphe().getAretes(); l; l = l->s){
+        this->sceneDessin->addLine(l->v->getExtremite1()->getPosition()->getX() * this->unite, l->v->getExtremite1()->getPosition()->getY() * this->unite,
+                                   l->v->getExtremite2()->getPosition()->getX() * this->unite, l->v->getExtremite2()->getPosition()->getY() * this->unite, pen);
+    }
+//    Element<Face*> * l = NULL;
+//    Element<Arete *> *l1 = NULL;
+//    for (l = this->carapace.getVoronoi()->getGraphe().getFaces(); l; l = l->s){
+//        for(l1 = l->v->getAretes() ; l1 ; l1 = l1->s)
+//            this->sceneDessin->addLine(l1->v->getExtremite1()->getPosition()->getX() * this->unite, l1->v->getExtremite1()->getPosition()->getY() * this->unite,
+//                                       l1->v->getExtremite2()->getPosition()->getX() * this->unite, l1->v->getExtremite2()->getPosition()->getY() * this->unite, QPen(Qt::red));
+//    }
 }
 
 void Application::dessinerContours(){
@@ -190,8 +214,8 @@ void Application::afficherCacherCerclesCirconscrits(){
     if(this->actionCacherMontrerCerclesCirconscrits->isChecked()){
         this->listeCerclesCirconscritsDessin.clear();
         for(Triangle * t : this->carapace.getTriangles())
-            this->listeCerclesCirconscritsDessin.push_back(this->sceneDessin->addEllipse((t->getCercle().getCentre().getX() - t->getCercle().getRayon()) * this->unite,
-                                                                                         (t->getCercle().getCentre().getY() - t->getCercle().getRayon()) * this->unite,
+            this->listeCerclesCirconscritsDessin.push_back(this->sceneDessin->addEllipse((t->getCercle().getCentre()->getX() - t->getCercle().getRayon()) * this->unite,
+                                                                                         (t->getCercle().getCentre()->getY() - t->getCercle().getRayon()) * this->unite,
                                                                                          t->getCercle().getRayon() * 2 * this->unite,
                                                                                          t->getCercle().getRayon() * 2 * this->unite));
     }
@@ -199,6 +223,26 @@ void Application::afficherCacherCerclesCirconscrits(){
         for(QGraphicsEllipseItem * ellipse : this->listeCerclesCirconscritsDessin)
             this->sceneDessin->removeItem(ellipse);
         this->listeCerclesCirconscritsDessin.clear();
+    }
+}
+
+void Application::afficherCacherCentresCerclesCirconscrits(){
+    QPen pen(Qt::red, 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QBrush brush(Qt::black);
+    int rayon = 2;
+    if(this->actionCacherMontrerCentresCerclesCirconscrits->isChecked()){
+        this->listeCentresCerclesCirconscrits.clear();
+        for(Triangle * t : this->carapace.getTriangles())
+            this->listeCentresCerclesCirconscrits.push_back(this->sceneDessin->addEllipse(t->getCercle().getCentre()->getX() * this->unite,
+                                                                                         t->getCercle().getCentre()->getY() * this->unite,
+                                                                                         rayon * 2,
+                                                                                         rayon * 2,
+                                                                                         pen ,brush));
+    }
+    else{
+        for(QGraphicsEllipseItem * ellipse : this->listeCentresCerclesCirconscrits)
+            this->sceneDessin->removeItem(ellipse);
+        this->listeCentresCerclesCirconscrits.clear();
     }
 }
 
@@ -213,7 +257,6 @@ void Application::genererNouveauxSites(){
 void Application::genererNouveauxSitesParfaits(){
     this->generateurCarapaceParfaite.genererNouveauxSites();
 }
-
 void Application::genererCarapaceParfaite(){
     this->generateurCarapaceParfaite.genererCarapace();
 }

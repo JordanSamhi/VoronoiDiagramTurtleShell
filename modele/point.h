@@ -7,6 +7,8 @@
 #include <vector>
 #include <cmath>
 
+class EquationDroite;
+
 using namespace std;
 
 class Point {
@@ -24,6 +26,7 @@ public:
     bool operator != (const Point &) const;
     bool estDans(vector<Point *>) const;
     const Point & operator = (const Point &);
+    bool pointVerifieEquationDroite(EquationDroite *)const;
 };
 inline ostream & operator <<(ostream & f, const Point & p) {
     return f << (string)p;

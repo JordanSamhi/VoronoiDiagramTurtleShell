@@ -9,4 +9,5 @@ int main(int argc, char *argv[]){
     Application app;
     app.show();
     return Qapp.exec();
+    //TODO GERER LES DESTRUCTION DE TOUS LES OBJETS SINON MEMOIRE SATURE
 }

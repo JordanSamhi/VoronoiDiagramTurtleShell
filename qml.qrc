@@ -10,5 +10,6 @@
         <file alias="/icones/carapaceVerte">icones/carapaceVerte.png</file>
         <file alias="/icones/triangle">icones/triangle.png</file>
         <file alias="/icones/cercle">icones/cercle.png</file>
+        <file alias="/icones/centreCercle">icones/centreCercle.png</file>
     </qresource>
 </RCC>
