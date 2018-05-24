@@ -23,6 +23,7 @@
 #include <QToolBar>
 #include <QGraphicsPolygonItem>
 #include <QResizeEvent>
+#include <QGraphicsLineItem>
 #include "modele/carapace.h"
 #include "controleur/generateurCarapaces/generateurcarapacealea.h"
 #include "controleur/generateurCarapaces/generateurcarapaceparfaite.h"
@@ -32,7 +33,6 @@ class Application : public QMainWindow
     Q_OBJECT
 public:
     Application();
-    //TODO Ajouter destructeur a la fin pour ne pas oublier de pointeurs
     ~Application();
     const Carapace & getCarapace() const;
     void update();
@@ -46,6 +46,7 @@ public slots:
     void afficherCacherTriangulation();
     void afficherCacherCerclesCirconscrits();
     void afficherCacherCentresCerclesCirconscrits();
+    void afficherCacherDiagrammeVoronoi();
     void genererCarapaceParfaite();
     void genererNouveauxSitesParfaits();
 private:
@@ -57,10 +58,12 @@ private:
     QGraphicsScene *sceneDessin;
     QMenu *menuFichier, *menuAffichage;
     QAction *actionQuitter, *actionCacherMontrerSites, *actionCacherMontrerTriangulation,
-            *actionCacherMontrerCerclesCirconscrits, *actionCacherMontrerCentresCerclesCirconscrits;
+            *actionCacherMontrerCerclesCirconscrits, *actionCacherMontrerCentresCerclesCirconscrits,
+            *actionCacherMontrerDiagrammeVoronoi;
     vector<QGraphicsEllipseItem *> listeCercleSites, listeCerclesCirconscritsDessin,
                                    listeCentresCerclesCirconscrits;
     vector<QGraphicsPolygonItem *> listePolygonsDessin;
+    vector<QGraphicsLineItem *> listeLignes;
     QToolBar * barreOutils;
 
     Carapace carapace;

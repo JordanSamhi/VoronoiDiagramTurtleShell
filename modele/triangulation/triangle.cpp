@@ -28,7 +28,6 @@ Triangle::Triangle(Point * p1, Point * p2, Point *p3, bool n) : Triangle(p1, p2,
 }
 
 Triangle::~Triangle() {
-    //TODO VOIR QUOI SUPPRIMER
 }
 
 
@@ -250,29 +249,6 @@ bool Triangle::estVoisinAvec(Triangle * t)const{
     return false;
 }
 
-//FIXME Méthode très très très très moche, à modifier si j'ai le temps (juste pour les tests)
-//vector<vector<Point *>> Triangle::getAretesSansVoisin()const{
-//    vector<vector<Point *>> aretesCommunes;
-//    vector<vector<Point *>> aretesSansVoisin;
-//    vector<Point*> areteSansVoisin;
-//    for(Triangle * voisin : this->getVoisins())
-//        if(!voisin->isNull())
-//            aretesCommunes.push_back(this->getAreteCommune(voisin));
-//    for(Point * p1 : this->lesTroisPoints){
-//        for(Point * p2 : this->lesTroisPoints){
-//            if(p1 != p2){
-//                for(vector<Point*> arete : aretesCommunes){
-//                    if((p1 == arete[0] && p2 != arete[1]) || (p1 == arete[1] && p2 != arete[0])){
-//                        areteSansVoisin.push_back(p1);
-//                        areteSansVoisin.push_back(p2);
-//                        aretesSansVoisin.push_back(areteSansVoisin);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    return aretesSansVoisin;
-//}
 vector<vector<Point *>> Triangle::getAretesSansVoisin()const{
     vector<vector<Point *>> aretesSansVoisin;
     for(Triangle * voisin : this->voisins){

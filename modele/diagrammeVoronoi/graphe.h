@@ -35,8 +35,6 @@ public:
     Element<Arete *> * getAretes()const;
     Element<Face *> *getFaces()const;
 
-//	Element<pair<Sommet *, Arete*>> *adjacences(const Sommet * sommet)const; //TODO a faire
-
     operator string() const;
     const Graphe  & operator = (const Graphe  &);
 };

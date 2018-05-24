@@ -21,7 +21,6 @@ private:
 public:
     Carapace();
     Carapace(Application *);
-    //TODO Ajouter destructeur a la fin pour ne pas oublier de pointeurs
     const vector<Point *> & getContourHaut() const;
     const vector<Point *> & getContourBas() const;
     const vector<Point *> & getSites() const;
@@ -34,7 +33,6 @@ public:
     void setVoronoi(DiagrammeVoronoi *);
     vector<Point *> getTousLesPointsDuContour()const;
 
-    //TODO enlever ça, c'est juste pour tester visuel !
     void updateVue()const;
 };
 

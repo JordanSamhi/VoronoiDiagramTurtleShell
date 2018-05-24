@@ -2,16 +2,16 @@
 
 
 
-Arete::Arete() :nom(""), extremite1(NULL), extremite2(NULL), clef(0) {}
+Arete::Arete() :nom(""), clef(0), extremite1(NULL), extremite2(NULL) {}
 
 Arete::Arete(const string & n, Sommet * extremiteA, Sommet * extremiteB, const int & c) :
-    nom(n), extremite1(extremiteA), extremite2(extremiteB), clef(c)
+    nom(n), clef(c), extremite1(extremiteA), extremite2(extremiteB)
 {
     extremite1->setDegre(extremite1->getDegre() + 1);
     extremite2->setDegre(extremite2->getDegre() + 1);
 }
 
-Arete::Arete(const Arete & a) :nom(a.nom), extremite1(a.extremite1), extremite2(a.extremite2), clef(a.clef) {}
+Arete::Arete(const Arete & a) :nom(a.nom), clef(a.clef), extremite1(a.extremite1), extremite2(a.extremite2) {}
 
 
 Arete::~Arete()

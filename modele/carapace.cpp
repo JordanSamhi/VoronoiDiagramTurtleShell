@@ -46,7 +46,6 @@ void Carapace::setTriangles(const vector<Triangle *> & triangles){
 }
 
 void Carapace::updateVue()const{
-    //TODO NE PAS APPELER UPDATE ICI, CHANGER ULTERIEUREMENT, CEST JUSTE POUR LES TESTS
     this->application->update();
 }
 

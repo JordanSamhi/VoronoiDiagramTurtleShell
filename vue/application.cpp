@@ -95,16 +95,22 @@ void Application::genererMenu(){
     this->actionCacherMontrerCentresCerclesCirconscrits->setCheckable(true);
     this->actionCacherMontrerCentresCerclesCirconscrits->setIcon(QIcon(":/icones/centreCercle"));
     this->actionCacherMontrerCentresCerclesCirconscrits->setToolTip("Afficher/Cacher centres cercles circonscrits");
+    this->actionCacherMontrerDiagrammeVoronoi = new QAction("Afficher/Cacher diagramme de Voronoï", this);
+    this->actionCacherMontrerDiagrammeVoronoi->setCheckable(true);
+    this->actionCacherMontrerDiagrammeVoronoi->setIcon(QIcon(":/icones/voronoi"));
+    this->actionCacherMontrerDiagrammeVoronoi->setToolTip("Afficher/Cacher diagramme de Voronoï");
     this->menuFichier->addAction(this->actionQuitter);
     this->menuAffichage->addAction(this->actionCacherMontrerSites);
     this->menuAffichage->addAction(this->actionCacherMontrerTriangulation);
     this->menuAffichage->addAction(this->actionCacherMontrerCerclesCirconscrits);
     this->menuAffichage->addAction(this->actionCacherMontrerCentresCerclesCirconscrits);
+    this->menuAffichage->addAction(this->actionCacherMontrerDiagrammeVoronoi);
     QObject::connect(this->actionQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     QObject::connect(this->actionCacherMontrerSites, SIGNAL(changed()), this, SLOT(afficherCacherSites()));
     QObject::connect(this->actionCacherMontrerTriangulation, SIGNAL(changed()), this, SLOT(afficherCacherTriangulation()));
     QObject::connect(this->actionCacherMontrerCerclesCirconscrits, SIGNAL(changed()), this, SLOT(afficherCacherCerclesCirconscrits()));
     QObject::connect(this->actionCacherMontrerCentresCerclesCirconscrits, SIGNAL(changed()), this, SLOT(afficherCacherCentresCerclesCirconscrits()));
+    QObject::connect(this->actionCacherMontrerDiagrammeVoronoi, SIGNAL(changed()), this, SLOT(afficherCacherDiagrammeVoronoi()));
 }
 
 void Application::genererBarreOutils(){
@@ -115,6 +121,7 @@ void Application::genererBarreOutils(){
     this->barreOutils->addAction(this->actionCacherMontrerTriangulation);
     this->barreOutils->addAction(this->actionCacherMontrerCerclesCirconscrits);
     this->barreOutils->addAction(this->actionCacherMontrerCentresCerclesCirconscrits);
+    this->barreOutils->addAction(this->actionCacherMontrerDiagrammeVoronoi);
 }
 
 const Carapace & Application::getCarapace() const{
@@ -122,7 +129,6 @@ const Carapace & Application::getCarapace() const{
 }
 
 void Application::update(){
-    //TODO diviser cette methode en plusieurs méthodes de dessin
     this->sceneDessin->clear();
     //Affichage contours
     this->dessinerContours();
@@ -133,22 +139,7 @@ void Application::update(){
     //Affichage des cercles circonscrits
     this->afficherCacherCerclesCirconscrits();
     this->afficherCacherCentresCerclesCirconscrits();
-
-    //TODO ENLEVER CA juste pour tests
-    Element<Arete*> * l = NULL;
-    QPen pen(Qt::red);
-    pen.setWidth(2);
-    for (l = this->carapace.getVoronoi()->getGraphe().getAretes(); l; l = l->s){
-        this->sceneDessin->addLine(l->v->getExtremite1()->getPosition()->getX() * this->unite, l->v->getExtremite1()->getPosition()->getY() * this->unite,
-                                   l->v->getExtremite2()->getPosition()->getX() * this->unite, l->v->getExtremite2()->getPosition()->getY() * this->unite, pen);
-    }
-//    Element<Face*> * l = NULL;
-//    Element<Arete *> *l1 = NULL;
-//    for (l = this->carapace.getVoronoi()->getGraphe().getFaces(); l; l = l->s){
-//        for(l1 = l->v->getAretes() ; l1 ; l1 = l1->s)
-//            this->sceneDessin->addLine(l1->v->getExtremite1()->getPosition()->getX() * this->unite, l1->v->getExtremite1()->getPosition()->getY() * this->unite,
-//                                       l1->v->getExtremite2()->getPosition()->getX() * this->unite, l1->v->getExtremite2()->getPosition()->getY() * this->unite, QPen(Qt::red));
-//    }
+    this->afficherCacherDiagrammeVoronoi();
 }
 
 void Application::dessinerContours(){
@@ -244,6 +235,31 @@ void Application::afficherCacherCentresCerclesCirconscrits(){
             this->sceneDessin->removeItem(ellipse);
         this->listeCentresCerclesCirconscrits.clear();
     }
+}
+
+void Application::afficherCacherDiagrammeVoronoi(){
+    Element<Arete*> * l = NULL;
+    QPen pen(Qt::red);
+    pen.setWidth(2);
+    if(this->actionCacherMontrerDiagrammeVoronoi->isChecked()){
+        this->listeLignes.clear();
+        for (l = this->carapace.getVoronoi()->getGraphe().getAretes(); l; l = l->s){
+            this->listeLignes.push_back(this->sceneDessin->addLine(l->v->getExtremite1()->getPosition()->getX() * this->unite, l->v->getExtremite1()->getPosition()->getY() * this->unite,
+                                       l->v->getExtremite2()->getPosition()->getX() * this->unite, l->v->getExtremite2()->getPosition()->getY() * this->unite, pen));
+        }
+    }
+    else{
+        for(QGraphicsLineItem * ligne : this->listeLignes)
+            this->sceneDessin->removeItem(ligne);
+        this->listeLignes.clear();
+    }
+//    Element<Face*> * l = NULL;
+//    Element<Arete *> *l1 = NULL;
+//    for (l = this->carapace.getVoronoi()->getGraphe().getFaces(); l; l = l->s){
+//        for(l1 = l->v->getAretes() ; l1 ; l1 = l1->s)
+//            this->sceneDessin->addLine(l1->v->getExtremite1()->getPosition()->getX() * this->unite, l1->v->getExtremite1()->getPosition()->getY() * this->unite,
+//                                       l1->v->getExtremite2()->getPosition()->getX() * this->unite, l1->v->getExtremite2()->getPosition()->getY() * this->unite, QPen(Qt::red));
+//    }
 }
 
 void Application::genererCarapace(){

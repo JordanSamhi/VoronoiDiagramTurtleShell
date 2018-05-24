@@ -1,11 +1,11 @@
 #include "Sommet.h"
 
-Sommet::Sommet() : nom(""), position(), degre(0), clef(0) {}
+Sommet::Sommet() : clef(0), nom(""), position(), degre(0) {}
 
 Sommet::Sommet(const string & nom, Point * position, const int & clef):
-    nom(nom), position(position), degre(0), clef(clef){}
+     clef(clef), nom(nom), position(position), degre(0){}
 
-Sommet::Sommet(const Sommet & s): nom(s.nom), position(s.position), degre(s.degre),clef(s.clef){}
+Sommet::Sommet(const Sommet & s): clef(s.clef), nom(s.nom), position(s.position), degre(s.degre){}
 
 Sommet::~Sommet(){}
 

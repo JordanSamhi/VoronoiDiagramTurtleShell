@@ -133,7 +133,6 @@ vector<Triangle *> Outils::getTrianglesAyantMoinsDeTroisVoisins(const vector<Tri
 }
 
 bool Outils::pointEstSurSegment(Point * p, Segment * s){
-    //TODO voir pour epsilon
     Point *a, *b;
     a = s->getA();
     b = s->getB();
@@ -175,6 +174,7 @@ vector<Point*> Outils::getAreteContenantPoint(const vector<vector<Point *>> & ar
     for(vector<Point *> arete : aretes)
         if(arete.at(0) == point || arete.at(1) == point)
             return arete;
+    return vector<Point *>();
 }
 
 Point * Outils::getPointLePlusAGauche(const vector<Point *> & points){

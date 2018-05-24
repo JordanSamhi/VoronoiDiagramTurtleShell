@@ -16,7 +16,6 @@ protected:
     vector<Point *> genererSitesPourCarapace(const Point &, const Point &, const Point &) const;
 public:
     static Point *pointMilieuPrecedent;
-    //TODO destructeur
     GenerateurCarapace();
     GenerateurCarapace(Carapace *);
     void genererCarapace();

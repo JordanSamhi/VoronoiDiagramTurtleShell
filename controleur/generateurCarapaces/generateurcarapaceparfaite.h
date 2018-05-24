@@ -5,7 +5,6 @@
 
 class GenerateurCarapaceParfaite : public GenerateurCarapace{
 public:
-    //TODO destructeur
     GenerateurCarapaceParfaite();
     GenerateurCarapaceParfaite(Carapace *);
     vector<Point *> calculPositionSites(const Bezier *) const;

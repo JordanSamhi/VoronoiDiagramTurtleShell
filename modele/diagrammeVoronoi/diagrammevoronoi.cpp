@@ -9,8 +9,7 @@ DiagrammeVoronoi::DiagrammeVoronoi(Carapace *carapace){
     Triangle *t1, *t2;
     Face * face;
     Point * p1, *p2, *intersection1, *intersection2,
-            *ptIntersection1, *ptIntersection2, *milieu1, *milieu2,
-            *pointContour1 = NULL, *pointContour2 = NULL;
+            *ptIntersection1, *ptIntersection2, *milieu1, *milieu2;
     EquationDroite *droitePerpendiculaireArete1, *droitePerpendiculaireArete2, *droiteContour;
     Segment *segmentContour, *segmentTmp1, *segmentTmp2;
     vector<Point*> contour, areteConsideree1, areteConsideree2;
@@ -121,8 +120,6 @@ DiagrammeVoronoi::DiagrammeVoronoi(Carapace *carapace){
                 s2 = this->graphe.creeSommet("", segmentTmp2->getB());
                 aretes.push_back(this->graphe.creeArete(s1, s2, ""));
             }
-            //Gestion des faces ouvertes
-
         }
     }
 }

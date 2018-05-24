@@ -14,14 +14,7 @@ Graphe::Graphe(const Graphe & g):prochaineClef(g.prochaineClef)
 }
 
 Graphe::~Graphe()
-{
-    //FIXME voir pourquoi ça bug quand on décommente ça
-    //à la sortie de la création de l'objet diagrammeVoronoi
-    //le destructeur est appelé, il devrait pas
-//    Element<Sommet*>::effacer(listeSommets);
-//    Element<Arete*>::effacer(listeAretes);
-//    Element<Face*>::effacer(listeFaces);
-}
+{}
 
 Sommet * Graphe::creeSommet(const string & nom, Point * position)
 {
@@ -82,13 +75,6 @@ Sommet * Graphe::getSommetParIndice(const int & indice)const
     return NULL;
 }
 
-/* A BESOIN DE ADAJCENCES
-Face * Graphe::getFaceParSommets(Element<Sommet*> *lsommets)const
-{
-    Element<Arete*> *lAretes;
-    //TO DO
-}
-*/
 Arete * Graphe::getAreteParSommets(const Sommet * s1, const Sommet * s2) const {
     Element<Arete*> * l;
     for (l = this->listeAretes; l; l = l->s)
@@ -105,20 +91,6 @@ bool Graphe::areteEntrePointsExiste(Sommet * s1, Sommet *s2)const{
     return false;
 }
 
-/* A REVOIR !!!!
-Element<pair<Sommet *, Arete*>> *Graphe::adjacences(const Sommet * sommet)const
-{
-    Element< Arete* > * l;
-    Element< pair< Sommet *, Arete* > > * r;
-    for (l = listeAretes , r = NULL; l; l = l->s) {
-        if (sommet == l->v->getExtremite1())
-            r = new Element<pair<Sommet *, Arete *>>(new pair< Sommet *, Arete* >(l->v->getExtremite2(), l->v), r);
-        else if (sommet == l->v->getExtremite2())
-            r = new Element<pair<Sommet*, Arete *>>(new pair< Sommet *, Arete *>(l->v->getExtremite1(), l->v), r);
-    }
-    return r;
-}
-*/
 Graphe::operator string() const
 {
     ostringstream oss;
