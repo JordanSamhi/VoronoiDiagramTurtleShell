@@ -8,15 +8,15 @@ Construction :
 * Voronoi diagrams have been generated using Delaunay triangulation.
 * Delaunay triangulation has been generated using Stéphanie Hahmann iterative algorithm.
 
-More information : [report/report.pdf]
+More information : https://github.com/dusby/VoronoiDiagramTurtleShell/blob/master/report/report.pdf
 
 More information on Voronoi diagrams : https://en.wikipedia.org/wiki/Voronoi_diagram
 
 ## Getting Started
 
-This project has been developped using QtCreator. One just has to import the project into QtCreator then compile it. An executable is provided to directly test the application.
+This project has been developped using QtCreator on Windows. One just has to import the project into QtCreator then compile it and launch it.
 
-## Authors
+### Authors
 
 * **Jordan Samhi**
 * **Tifaout Almeftah**
