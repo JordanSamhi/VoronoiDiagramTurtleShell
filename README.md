@@ -16,7 +16,7 @@ More information on Voronoi diagrams : https://en.wikipedia.org/wiki/Voronoi_dia
 
 This project has been developped using QtCreator on Windows. One just has to import the project into QtCreator then compile it and launch it.
 
-### Authors
+## Authors
 
 * **Jordan Samhi**
 * **Tifaout Almeftah**
