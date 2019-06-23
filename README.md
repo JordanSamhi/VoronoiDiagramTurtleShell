@@ -8,6 +8,8 @@ Construction :
 * Voronoi diagrams have been generated using Delaunay triangulation.
 * Delaunay triangulation has been generated using Stéphanie Hahmann iterative algorithm.
 
+More information : [report/report.pdf]
+
 More information on Voronoi diagrams : https://en.wikipedia.org/wiki/Voronoi_diagram
 
 ## Getting Started
